@@ -26,6 +26,10 @@ QList<Diagnostic> RootNode::diagnostics() const {
     return m_diagnostics;
 }
 
+bool RootNode::userWritesEnabled() const {
+    return true;
+}
+
 void RootNode::reloadFromFile() {
     const auto oldDiagnostics = m_diagnostics;
     m_diagnostics.clear();
@@ -40,6 +44,9 @@ void RootNode::reloadFromFile() {
 }
 
 void RootNode::saveToFile() {
+    if (!userWritesEnabled())
+        return;
+
     m_file->write(toJson());
 }
 

@@ -94,6 +94,9 @@ public:                                                                         
         if (rejectInvalidWrite(QStringLiteral(#name), value))                                                          \
             return; /* Skip writes of the wrong type */                                                                \
                                                                                                                        \
+        if (rejectReadOnlyWrite(QStringLiteral(#name)))                                                               \
+            return; /* Skip interactive writes to declaratively managed settings */                                   \
+                                                                                                                       \
         if (rejectGlobalWrite(QStringLiteral(#name)))                                                                  \
             return; /* Skip writes to global only keys, they should be sent to the global layer */                     \
                                                                                                                        \

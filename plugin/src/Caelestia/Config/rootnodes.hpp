@@ -50,6 +50,7 @@ public:
     explicit ConfigRoot(const QString& path, ConfigRoot* fallback = nullptr, QObject* parent = nullptr);
 
     [[nodiscard]] const FontTokens* fontTokens() const;
+    [[nodiscard]] bool userWritesEnabled() const override;
 
 private:
     // Binds computed values to the global token base values
@@ -67,6 +68,8 @@ class TokensRoot : public settings::RootNode {
 
 public:
     explicit TokensRoot(const QString& path, TokensRoot* fallback = nullptr, QObject* parent = nullptr);
+
+    [[nodiscard]] bool userWritesEnabled() const override;
 };
 
 namespace detail {

@@ -113,6 +113,9 @@ QVariantList ListNode::values() const {
 }
 
 void ListNode::remove(qsizetype index) {
+    if (rejectReadOnlyWrite(valuesKey()))
+        return;
+
     if (rejectGlobalMutation())
         return;
 
@@ -134,6 +137,9 @@ void ListNode::remove(qsizetype index) {
 }
 
 void ListNode::move(qsizetype from, qsizetype to) {
+    if (rejectReadOnlyWrite(valuesKey()))
+        return;
+
     if (rejectGlobalMutation())
         return;
 
@@ -159,6 +165,9 @@ void ListNode::move(qsizetype from, qsizetype to) {
 }
 
 void ListNode::clear() {
+    if (rejectReadOnlyWrite(valuesKey()))
+        return;
+
     if (rejectGlobalMutation())
         return;
 
@@ -215,6 +224,9 @@ bool ListNode::setValue(const QString& key, const QVariant& value, QList<Diagnos
             qUtf8Printable(key), qUtf8Printable(path()));
         return false;
     }
+
+    if (rejectReadOnlyWrite(key))
+        return false;
 
     const auto len = m_elements.count();
 
@@ -324,6 +336,9 @@ Node* ListNode::elementAt(qsizetype index) const {
 }
 
 Node* ListNode::insertElement(const QVariantMap& props, qsizetype index) {
+    if (rejectReadOnlyWrite(valuesKey()))
+        return nullptr;
+
     if (rejectGlobalMutation())
         return nullptr;
 

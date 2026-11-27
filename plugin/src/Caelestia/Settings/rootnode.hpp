@@ -16,6 +16,8 @@ public:
 
     [[nodiscard]] QList<Diagnostic> diagnostics() const;
 
+    [[nodiscard]] virtual bool userWritesEnabled() const;
+
     void load();
 
 signals:

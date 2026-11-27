@@ -1,5 +1,6 @@
 #include "node.hpp"
 
+#include "rootnode.hpp"
 #include "util/i18n.hpp"
 
 namespace caelestia::shell::settings {
@@ -172,6 +173,16 @@ bool Node::rejectGlobalWrite(const QString& key) {
             "This should not be used, write global options from the global layer instead.",
             qUtf8Printable(pathFor(key)));
 
+    return true;
+}
+
+bool Node::rejectReadOnlyWrite(const QString& key) const {
+    const auto origin = m_rootNode->m_writeOrigin;
+    if ((origin != WriteOrigin::Qml && origin != WriteOrigin::QmlReset) ||
+        static_cast<const RootNode*>(m_rootNode)->userWritesEnabled())
+        return false;
+
+    qCWarning(lcSettings, "Attempted to write read-only option %s, ignoring.", qUtf8Printable(pathFor(key)));
     return true;
 }
 

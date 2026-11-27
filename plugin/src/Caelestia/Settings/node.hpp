@@ -57,6 +57,8 @@ protected:
     template <typename T> [[nodiscard]] bool rejectInvalidWrite(const QString& key, const T& value) const;
     // Returns true if the write should be skipped afterwards, overlays cannot write global options
     bool rejectGlobalWrite(const QString& key);
+    // Returns true if an interactive change is disallowed by the root policy.
+    bool rejectReadOnlyWrite(const QString& key) const;
     static void warnGlobalSync(QList<Diagnostic>& diagnostics, const QString& path);
     bool rejectGlobalSync(QList<Diagnostic>& diagnostics) const; // Returns true if the sync should be rejected
     // Returns true if the notify signal should be emitted

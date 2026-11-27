@@ -64,6 +64,10 @@ const FontTokens* ConfigRoot::fontTokens() const {
     return m_fontTokens;
 }
 
+bool ConfigRoot::userWritesEnabled() const {
+    return m_general->configWritable();
+}
+
 void ConfigRoot::bindTokens() {
     const auto* tokens = TokensSingleton::instance()->appearance();
     m_appearance->rounding()->bindTokens(tokens->rounding());
@@ -76,6 +80,10 @@ void ConfigRoot::bindTokens() {
 
 TokensRoot::TokensRoot(const QString& path, TokensRoot* fallback, QObject* parent)
     : RootNode(true, path, fallback, parent) {}
+
+bool TokensRoot::userWritesEnabled() const {
+    return ConfigSingleton::instance()->userWritesEnabled();
+}
 
 SETTINGS_SINGLETON_IMPL(ConfigSingleton, ConfigRoot, configDir(), monitorConfigDir(), u"shell.json"_s,
     detail::Handler<detail::ConfigKind::Shell>)
