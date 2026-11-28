@@ -420,6 +420,7 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
         "showOverFullscreen": false,
         "mediaGifSpeedAdjustment": 300,
         "sessionGifSpeed": 0.7,
+        "configWritable": true,
         "apps": {
             "terminal": ["foot"],
             "audio": ["pwvucontrol"],
